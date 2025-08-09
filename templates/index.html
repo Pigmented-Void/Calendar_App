@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My Calendar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>🎯 My Web Calendar</h1>
+    
+    <form method="post">
+        <label>Date:</label>
+        <input type="date" name="date" value="{{ today }}" required><br>
+
+        <label>Event / Note:</label>
+        <input type="text" name="note" required><br>
+
+        <label>Colour:</label>
+        <input type="color" name="colour" value="#ffffff"><br>
+
+        <label>Icon:</label>
+        <select name="icon">
+            <option value="">None</option>
+            <option value="📅">Meeting</option>
+            <option value="🎂">Birthday</option>
+            <option value="⭐">Important</option>
+            <option value="💼">Work</option>
+            <option value="🛠">Personal</option>
+        </select><br>
+
+        <button type="submit">Add Event</button>
+    </form>
+
+    <h2>📅 Upcoming Events</h2>
+    <ul>
+        {% for e in events %}
+            <li style="background-color:{{ e['colour'] }}">
+                {{ e['date'] }} {{ e['icon'] }} {{ e['note'] }}
+                <a href="{{ url_for('delete', event_id=e['id']) }}" style="color:red;">[Delete]</a>
+            </li>
+        {% else %}
+            <li>No events yet.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
