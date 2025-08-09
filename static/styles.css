@@ -1,0 +1,27 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #222;
+    color: white;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+input, select, button {
+    margin: 6px 0;
+    padding: 6px;
+    width: 100%;
+}
+button {
+    background: #444;
+    color: white;
+    border: none;
+}
+button:hover {
+    background: #666;
+}
+li {
+    padding: 6px;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    list-style: none;
+}
