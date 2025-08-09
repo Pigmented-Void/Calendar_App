@@ -20,5 +20,10 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Run script
-        run: python inspect_db.py  # Replace with your script filename
+      - name: Run inspect_db.py and add results to summary
+        run: |
+          python inspect_db.py > output.txt
+          echo "## 📋 Inspect DB Results" >> $GITHUB_STEP_SUMMARY
+          echo '```
+          cat output.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
