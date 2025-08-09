@@ -112,7 +112,7 @@ class FloatingCalendarWidget(QWidget):
         # Style
         self.setStyleSheet("""
             QWidget {
-                background-color: rgba(20, 20, 20, 220);
+                background-color: rgba(150, 20, 20, 220);
                 color: white;
                 font-family: Arial;
             }
