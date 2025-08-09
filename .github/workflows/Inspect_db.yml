@@ -23,7 +23,10 @@ jobs:
       - name: Run inspect_db.py and add results to summary
         run: |
           python inspect_db.py > output.txt
-          echo "## 📋 Inspect DB Results" >> $GITHUB_STEP_SUMMARY
-          echo '```
-          cat output.txt >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
+          {
+            echo "## 📋 Inspect DB Results"
+            echo '```'
+            cat output.txt
+            echo '```
+          } >> $GITHUB_STEP_SUMMARY
+
