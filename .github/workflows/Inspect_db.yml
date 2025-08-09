@@ -3,7 +3,7 @@ name: Inspect My Events
 on: [push, pull_request]
 
 jobs:
-  run-python:
+  Database-Events-Inspection:
     runs-on: ubuntu-latest
 
     steps:
