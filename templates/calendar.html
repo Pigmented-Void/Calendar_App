@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-3xl font-extrabold mb-6 text-center">🗓 Interactive Calendar</h2>
+
+<div id='calendar' class="bg-gray-800 rounded-lg shadow-lg p-4 mx-auto max-w-5xl"></div>
+
+<!-- FullCalendar CSS & JS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/main.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        },
+        height: 'auto',
+        events: '/api/events',
+        eventDidMount: function(info) {
+            const icon = info.event.title.match(/^[^\s]+/);
+            if(icon) {
+                const titleEl = info.el.querySelector('.fc-event-title');
+                if (titleEl) titleEl.innerHTML = info.event.title;
+            }
+            info.el.style.animation = 'fadeInUp 0.35s ease forwards';
+        },
+        eventMouseEnter: function(info) {
+            info.el.style.backgroundColor = shadeColor(info.event.backgroundColor, -15);
+            info.el.style.transition = 'background-color 0.3s ease';
+        },
+        eventMouseLeave: function(info) {
+            info.el.style.backgroundColor = info.event.backgroundColor;
+        },
+        eventClick: function(info) {
+            alert("Event: " + info.event.title + "\nDate: " + info.event.startStr);
+        },
+        editable: false,
+        selectable: true,
+        dayMaxEvents: true,
+        navLinks: true
+    });
+
+    calendar.render();
+
+    function shadeColor(color, percent) {
+        const f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent;
+        const R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
+        return "#" + (0x1000000 + (Math.round((t-R)*p)+R)*0x10000
+        + (Math.round((t-G)*p)+G)*0x100 + (Math.round((t-B)*p)+B))
+        .toString(16).slice(1);
+    }
+});
+</script>
+
+<style>
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+</style>
+{% endblock %}
